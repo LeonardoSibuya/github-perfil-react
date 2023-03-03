@@ -2,16 +2,21 @@ import { useEffect, useState } from "react"
 
 import styles from './ReposList.module.css'
 
-const ReposList = () => {
+const ReposList = ({ nomeUsuario }) => {
     const [repos, setRepos] = useState([]) // Este repos é um array que começa vazio, de acordo com o useState([]), e será preenchido com os valores que o setRepos irá coletar.
 
+    const [deuErro, setDeuErro] = useState(false)
+
     useEffect(() => { // Aqui usamos o useEffect com valor [] vazio, pois a condição é de executar assim que o componente for renderizado
-        fetch('https://api.github.com/users/leonardosibuya/repos') //AQUI FAZEMOS A ESTRUTURA DE BAIXAR API DO GITHUB
+        fetch(`https://api.github.com/users/${nomeUsuario}/repos`) //AQUI FAZEMOS A ESTRUTURA DE BAIXAR API DO GITHUB
         .then( res => res.json())
         .then(resJson => {
             setRepos(resJson) //AUI SETAMOS QUE O setRepos RECEBERÁ TODO O VALOR DA API resJson
         })
-    }, []) //array vazio para informar que a condição é a inicialização do componente
+        .catch(erro => {
+            setDeuErro(true)
+        })
+    }, [nomeUsuario]) //array vazio para informar que a condição é a inicialização do componente
 
     return (
         <div className="container">

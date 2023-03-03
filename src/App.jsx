@@ -21,11 +21,24 @@ function App() {
 
   const [formularioEstaVisivel, setformularioEstaVisivel] = useState(true) // formularioEstaVisivel será o elemento que iremos manipular, e o  setformularioEstaVisivel é responsável por receber o valor, e o useState está recebendo um booleano com valor true, pois o elemento vai começar visivel.
 
+  const [nomeUsuario, setNomeUsuario] = useState('')
+
   return (
     <>
-      <Perfil nomeUsuario="Leonardo Sibuya" avatar="https://github.com/leonardosibuya.png"/> {/* AQUI RENDERIZAMOS O ARQUIVO QUE IMPORTAMOS | E PODEMOS PASSAR VARIAVEIS QUE RECEBERÃO OS VALORES QUE PODEMOS EXPORTAR COMO ARGUMENTO PARA O ARQUIVO INDEX.JSX*/}
+      <div className="containerDoInput">
+      <label htmlFor="nomeGh" className="label">Digite seu username GitHub</label>
+      <input type="text" id="nomeGh" className="input" onBlur={evento => setNomeUsuario(evento.target.value)}/>
+      </div>
+      {nomeUsuario.length > 4 && (
+      <>
+          <Perfil nomeUsuario={nomeUsuario}/> 
+          {/* AQUI RENDERIZAMOS O ARQUIVO QUE IMPORTAMOS | E PODEMOS PASSAR VARIAVEIS QUE RECEBERÃO OS VALORES QUE PODEMOS EXPORTAR COMO ARGUMENTO PARA O ARQUIVO INDEX.JSX */}
 
-      <ReposList/>
+          <ReposList nomeUsuario={nomeUsuario}/>
+      </>
+      )}
+
+
 
       <br />
 
